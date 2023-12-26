@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>System Księgowości</title>
+  <style>
+    <style>
+    /* Resetowanie domyślnych stylów */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* Stylizacja headera */
+    header {
+      background-color: #4CAF50;
+      color: black;
+      text-align: center;
+      padding: 20px;
+    }
+
+    header h1 {
+      margin-bottom: 20px;
+    }
+
+    .summary {
+      display: flex;
+      justify-content: space-around;
+      margin-top: 20px;
+    }
+
+    .inventory,
+    .balance {
+      padding: 20px;
+      background-color: #f0f0f0;
+      border-radius: 5px;
+    }
+
+    /* Stylizacja sekcji formularzy */
+    .forms {
+      display: flex;
+      justify-content: space-around;
+      margin-top: 30px;
+    }
+
+    .form {
+      width: 30%;
+      padding: 20px;
+      background-color: #f1f1f1;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      margin-bottom: 20px;
+    }
+
+    .forms h2 {
+      margin-bottom: 10px;
+    }
+
+    form label,
+    form input,
+    form button {
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    form button {
+      padding: 10px;
+      background-color: #4CAF60;
+      color: white;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+
+    /* Stylizacja stopki */
+    footer {
+      text-align: center;
+      margin-top: 50px;
+      padding: 20px;
+      background-color: #444;
+      color: black;
+    }
+
+    footer a {
+      text-decoration: none;
+      color: red;
+    }
+  </style>
+
+    /* Resetowanie domyślnych stylów */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* Twój styl */
+    /* ... (twoje style) ... */
+
+  </style>
+</head>
+<body>
+  <header>
+    <h1>System Księgowości</h1>
+    <div class="summary">
+      <div class="inventory">
+        <h2>Aktualny stan magazynowy</h2>
+        <p>Nazwa produktu: Produkt 1</p>
+        <p>Liczba sztuk: 100</p>
+      </div>
+      <div class="balance">
+        <h2>Aktualne saldo</h2>
+        <p>Saldo: 5000</p>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="forms">
+      <form id="purchase-form" class="form">
+        <h2>Zakup produktu</h2>
+        <label for="purchase-product">Nazwa produktu:</label>
+        <input type="text" id="purchase-product" name="purchase-product" value="Produkt 1" readonly>
+        <label for="purchase-price">Cena jednostkowa:</label>
+        <input type="number" id="purchase-price" name="purchase-price" value="100" readonly>
+        <label for="purchase-quantity">Liczba sztuk:</label>
+        <input type="number" id="purchase-quantity" name="purchase-quantity" value="1">
+        <button type="submit">Zakup</button>
+      </form>
+      <form id="sale-form" class="form">
+        <h2>Sprzedaż produktu</h2>
+        <label for="sale-product">Nazwa produktu:</label>
+        <input type="text" id="sale-product" name="sale-product" value="Produkt 1" readonly>
+        <label for="sale-price">Cena jednostkowa:</label>
+        <input type="number" id="sale-price" name="sale-price" value="100" readonly>
+        <label for="sale-quantity">Liczba sztuk:</label>
+        <input type="number" id="sale-quantity" name="sale-quantity" value="1">
+        <button type="submit">Sprzedaż</button>
+      </form>
+      <form id="balance-form" class="form">
+        <h2>Zmiana salda</h2>
+        <label for="balance-comment">Komentarz:</label>
+        <input type="text" id="balance-comment" name="balance-comment">
+        <label for="balance-value">Wartość:</label>
+        <input type="number" id="balance-value" name="balance-value" value="100">
+        <button type="submit">Zmień saldo</button>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    <a href="historia.html">historia</a>
+  </footer>
+
+  <script>
+    // Funkcja zapisująca dane transakcji do localStorage
+    function saveTransaction(description, amount) {
+      const transactions = JSON.parse(localStorage.getItem('transactions')) || [];
+      const newTransaction = { description, amount };
+      transactions.push(newTransaction);
+      localStorage.setItem('transactions', JSON.stringify(transactions));
+    }
+
+    // Nasłuchiwanie na zdarzenie submit formularza Zakupu
+    document.getElementById('purchase-form').addEventListener('submit', function(event) {
+      event.preventDefault();
+      const description = document.getElementById('purchase-product').value;
+      const amount = parseInt(document.getElementById('purchase-quantity').value);
+      saveTransaction(description, amount);
+      // Dodatkowa logika obsługi formularza zakupu
+      // ...
+    });
+
+    // Nasłuchiwanie na zdarzenie submit formularza Sprzedaży
+    document.getElementById('sale-form').addEventListener('submit', function(event) {
+      event.preventDefault();
+      const description = document.getElementById('sale-product').value;
+      const amount = -parseInt(document.getElementById('sale-quantity').value); // Sprzedaż - ujemna kwota
+      saveTransaction(description, amount);
+      // Dodatkowa logika obsługi formularza sprzedaży
+      // ...
+    });
+
+    // Nasłuchiwanie na zdarzenie submit formularza Zmiany Salda
+    document.getElementById('balance-form').addEventListener('submit', function(event) {
+      event.preventDefault();
+      const description = document.getElementById('balance-comment').value;
+      const amount = parseInt(document.getElementById('balance-value').value);
+      saveTransaction(description, amount);
+      // Dodatkowa logika obsługi formularza zmiany salda
+      // ...
+    });
+  </script>
+</body>
+</html>

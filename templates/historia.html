@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Historia Transakcji</title>
+ <style>
+    /* Resetowanie domyślnych stylów */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background-color: #f4f4f4;
+      color: #333;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #4CAF50;
+    }
+
+    .transaction-history {
+      padding: 20px;
+      background-color: #f0f0f0;
+      border-radius: 5px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .transaction-item {
+      padding: 10px;
+      margin-bottom: 10px;
+      background-color: #fff;
+      border-radius: 3px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .transaction-item:hover {
+      background-color: #f9f9f9;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Historia Transakcji</h1>
+    <div class="transaction-history" id="transactionHistory">
+      <!-- Tutaj będzie wyświetlana historia transakcji -->
+    </div>
+  </div>
+
+  <script>
+    // Funkcja pobierająca i wyświetlająca historię transakcji
+    function displayTransactionHistory() {
+      const transactionHistory = document.getElementById('transactionHistory');
+      const transactions = JSON.parse(localStorage.getItem('transactions')) || [];
+
+      transactions.forEach(transaction => {
+        const transactionItem = document.createElement('div');
+        transactionItem.classList.add('transaction-item');
+        transactionItem.innerHTML = `<p>Opis: ${transaction.description}, Kwota: ${transaction.amount}</p>`;
+
+        transactionHistory.appendChild(transactionItem);
+      });
+    }
+
+    // Wywołanie funkcji po załadowaniu strony
+    window.onload = displayTransactionHistory;
+  </script>
+</body>
+</html>
